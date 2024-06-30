@@ -17,7 +17,7 @@ DISPLAY_NAME = input("Enter a display name: ")
 def is_letter_or_num(t: str):
     # i thought a function for this already existed but i guess not
     for char in t:
-        if char not in "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789":
+        if char not in "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789 ":
             return False
     return True
 
