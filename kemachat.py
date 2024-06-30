@@ -34,7 +34,6 @@ def print_all():
 
 def get_messages():
     msgs = s.get(api + "/get_messages").json()
-    print(msgs)
 
     for msg in msgs:
         user_id = msg["user_id"]
