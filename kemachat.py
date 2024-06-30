@@ -7,38 +7,11 @@ import uuid
 import json
 import os
 
-id = str(uuid.uuid4())
 api = "https://sped.lol"
 s = requests.session()
 
 messages_already_printed = []
 DISPLAY_NAME = input("Enter a display name: ")
-
-def is_letter_or_num_or_space(t: str):
-    # i thought a function for this already existed but i guess not
-    for char in t:
-        if char not in "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789 ":
-            return False
-    return True
-
-while not is_letter_or_num_or_space(DISPLAY_NAME):
-    print("Display name must be only letters, numbers or spaces (kdots restriction not me)")
-    DISPLAY_NAME = input("Enter a display name: ")
-
-def parse_km_message(message):
-    try:
-        ms = message[15:]
-        display_name_length = 0
-        if ms[0] == "0":
-            display_name_length = int(ms[1])
-        else:
-            display_name_length = int(ms[0:2])
-        ms = ms[2:]
-        display_name = ms[0:display_name_length]
-        ms = ms[display_name_length:]
-        return [display_name, ms]
-    except:
-        return []
 
 def print_all():
     for m in messages_already_printed:
@@ -52,9 +25,6 @@ def get_messages():
         text: str = msg["text"]
         display_name = msg["user_id"]
         stamp = msg["stamp"]
-
-        if text.startswith("KEMACHATMESSAGE"):
-            display_name, text = parse_km_message(text)
         
         full_message = [stamp, display_name, text]
         if full_message not in messages_already_printed:
@@ -66,9 +36,9 @@ def send_message(content: str):
     
     stamp = datetime.datetime.now(datetime.UTC).strftime("%X")
     message = {
-        "user_id": id,
+        "user_id": DISPLAY_NAME,
         "avatar": "",
-        "text": "KEMACHATMESSAGE" + str(len(DISPLAY_NAME))[0:2].rjust(2, "0") + DISPLAY_NAME + content,
+        "text": content,
         "stamp": stamp,
     }
 
