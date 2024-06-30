@@ -2,6 +2,7 @@
 
 import requests
 import datetime
+
 import uuid
 import json
 import os
@@ -12,6 +13,17 @@ s = requests.session()
 
 messages_already_printed = []
 DISPLAY_NAME = input("Enter a display name: ")
+
+def is_letter_or_num(t: str):
+    # i thought a function for this already existed but i guess not
+    for char in t:
+        if char not in "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789":
+            return False
+    return True
+
+while not is_letter_or_num(DISPLAY_NAME):
+    print("Display name must be asciinumeric (kdots restriction not me)")
+    DISPLAY_NAME = input("Enter a display name: ")
 
 def parse_km_message(message):
     try:
